@@ -1,12 +1,11 @@
 ﻿using System.Linq;
-using Example.DataRepository;
 using Microsoft.EntityFrameworkCore;
+using WebAPI.DataRepository;
 
-namespace Example.DataAccess
+namespace WebAPI.DataAccess
 {
     public class EntityRepository<T> : IEntityRepository<T> where T : class, new()
     {
-
         private CustomerDbContext _dbContext;
         private DbSet<T> _dbSet;
 

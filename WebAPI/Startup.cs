@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebAPI.BusinessLogic;
+using WebAPI.DataAccess;
+using WebAPI.DataRepository;
 
-namespace Example
+namespace WebAPI
 {
     public class Startup
     {
@@ -19,6 +22,9 @@ namespace Example
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<CustomerDbContext>();
+            services.AddScoped<WeatherForecastService>();
+            services.AddScoped<IEntityRepository<WeatherForecast>, EntityRepository<WeatherForecast>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

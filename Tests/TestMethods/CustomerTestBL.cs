@@ -1,12 +1,12 @@
-﻿using Moq;
-using NUnit.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Example.BusinessLogic;
-using Example.DataAccess;
-using Example.DataRepository;
+using Moq;
+using NUnit.Framework;
+using WebAPI.BusinessLogic;
+using WebAPI.DataAccess;
+using WebAPI.DataRepository;
 
-namespace Example.Tests.TestMethods
+namespace Tests.TestMethods
 {
     public class CustomerTestBL
     {

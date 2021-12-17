@@ -1,10 +1,7 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Example.BusinessLogic;
+using WebAPI.BusinessLogic;
 
-namespace Example.Tests.TestMethods
+namespace Tests.TestMethods
 {
     public class MathTestBL
     {

@@ -1,4 +1,4 @@
-﻿namespace Example.BusinessLogic
+﻿namespace WebAPI.BusinessLogic
 {
     public class MathService
     {

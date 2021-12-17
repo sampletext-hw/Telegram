@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Example.DataAccess;
-using Example.DataRepository;
+using WebAPI.DataAccess;
+using WebAPI.DataRepository;
 
-namespace Example.BusinessLogic
+namespace WebAPI.BusinessLogic
 {
     public class CustomerService
     {
         private IEntityRepository<Customer> _customerRepository { get; set; }
+
         public CustomerService(IEntityRepository<Customer> customerRepository)
         {
             _customerRepository = customerRepository;
@@ -38,6 +39,5 @@ namespace Example.BusinessLogic
 
             return isAdded;
         }
-
     }
 }

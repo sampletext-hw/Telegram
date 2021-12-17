@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Example.DataAccess
+namespace WebAPI.DataAccess
 {
     public interface IEntityRepository<T> where T : class, new()
     {
