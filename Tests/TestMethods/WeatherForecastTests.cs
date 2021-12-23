@@ -4,6 +4,7 @@ using System.Linq;
 using Moq;
 using NUnit.Framework;
 using WebAPI.BusinessLogic;
+using WebAPI.Controllers;
 using WebAPI.DataAccess;
 using WebAPI.DataRepository;
 
@@ -12,6 +13,7 @@ namespace Tests.TestMethods
     public class WeatherForecastTests
     {
         private Mock<IEntityRepository<WeatherForecast>> weatherRepositoryMock;
+        private Mock<WeatherForecastService> weatherServiceMock;
         private List<WeatherForecast> weatherForecasts;
 
         [SetUp]
@@ -19,6 +21,7 @@ namespace Tests.TestMethods
         {
             //Set up the mock
             weatherRepositoryMock = new Mock<IEntityRepository<WeatherForecast>>();
+            weatherServiceMock    = new Mock<WeatherForecastService>(weatherRepositoryMock.Object);
             weatherForecasts      = new List<WeatherForecast>();
             weatherForecasts.Add(new WeatherForecast() { Id = 1, Date = DateTime.Now, Summary = "Hello", TemperatureC = 10 });
             weatherForecasts.Add(new WeatherForecast() { Id = 2, Date = DateTime.Now, Summary = "World", TemperatureC = 20 });
@@ -31,21 +34,25 @@ namespace Tests.TestMethods
             //Act
             weatherRepositoryMock.Setup(a => a.GetAllQueryable()).Returns(weatherForecasts.AsQueryable());
 
+            weatherServiceMock.Setup(s => s.GetAllForecasts()).Returns(weatherRepositoryMock.Object.GetAllQueryable().ToList());
+            var weatherForecastService = weatherServiceMock.Object;
+
             //Arrange
-            var weatherForecastService = new WeatherForecastService(weatherRepositoryMock.Object);
-            var allForecasts           = weatherForecastService.GetAllForecasts();
+            var weatherForecastController = new WeatherForecastController(weatherForecastService);
+            var allForecastsEnumerable    = weatherForecastController.Get();
+            var allForecastsList          = allForecastsEnumerable.ToList();
 
             //Arrest
-            Assert.IsTrue(allForecasts.Count == 3);
-            Assert.That(allForecasts[0].Id == 1);
-            Assert.That(allForecasts[0].Summary == "Hello");
-            Assert.That(allForecasts[0].TemperatureC == 10);
-            Assert.That(allForecasts[1].Id == 2);
-            Assert.That(allForecasts[1].Summary == "World");
-            Assert.That(allForecasts[1].TemperatureC == 20);
-            Assert.That(allForecasts[2].Id == 3);
-            Assert.That(allForecasts[2].Summary == "!");
-            Assert.That(allForecasts[2].TemperatureC == 30);
+            Assert.IsTrue(allForecastsList.Count == 3);
+            Assert.That(allForecastsList[0].Id == 1);
+            Assert.That(allForecastsList[0].Summary == "Hello");
+            Assert.That(allForecastsList[0].TemperatureC == 10);
+            Assert.That(allForecastsList[1].Id == 2);
+            Assert.That(allForecastsList[1].Summary == "World");
+            Assert.That(allForecastsList[1].TemperatureC == 20);
+            Assert.That(allForecastsList[2].Id == 3);
+            Assert.That(allForecastsList[2].Summary == "!");
+            Assert.That(allForecastsList[2].TemperatureC == 30);
         }
     }
 }
